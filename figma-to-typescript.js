@@ -10,8 +10,15 @@ const propTypesToTS = {
     'TEXT': 'string',
     'NUMBER': 'number',
     'BOOLEAN': 'boolean',
+    // Change this if you are using a different library
+    'INSTANCE_SWAP': 'React.ReactNode',
 };
 
+/**
+ * Cleans up a given name by removing digits, special characters, and spaces.
+ * @param {string} name - The input name to be cleaned.
+ * @returns {string} - The cleaned name with digits, special characters, and spaces removed.
+ */
 const cleanName = (name) => {
     return name
         .replace(/\d/g, '') // Remove any digits
@@ -21,14 +28,22 @@ const cleanName = (name) => {
         .replace(/\s/g, ''); // Remove spaces if any left
 }
 
+/**
+ * Converts component property definitions to TypeScript type definitions.
+ *
+ * @param {Object} componentPropertyDefinitions - The component property definitions in the form of an object.
+ * @returns {string} - A string containing the TypeScript type definitions.
+ */
 function convertToType(componentPropertyDefinitions) {
     const result = [];
     Object.keys(componentPropertyDefinitions).forEach(key => {
         const props = componentPropertyDefinitions[key];
         const cleanKey = cleanName(key);
+
         if (props.type in propTypesToTS) {
             result.push(`${cleanKey}: ${propTypesToTS[props.type]}`);
         }
+
         if (props.type === 'VARIANT') {
             result.push(`${cleanKey}: ${props.variantOptions.map(option => `'${option}'`).join(' | ')}`);
         }
@@ -36,6 +51,15 @@ function convertToType(componentPropertyDefinitions) {
     return result.join(', ');
 }
 
+/**
+ * Asynchronously writes data to a ts file.
+ *
+ * @async
+ * @param {string} filePath - The path to the file.
+ * @param {string|Buffer} data - The data to write to the file.
+ * @returns {Promise<void>} A Promise that resolves when the operation is complete or rejects with an error.
+ * @throws {Error} If an error occurs while writing data to the file.
+ */
 const writeFile = async (filePath, data) => {
     return new Promise((resolve, reject) => {
         fs.writeFile(filePath, data, 'utf8', (error) => {
@@ -97,4 +121,8 @@ const getTypes = async (fileKey, accessToken) => {
     return components.data;
 }
 
-getTypes(process.env.FIGMA_FILE_KEY, process.env.FIGMA_PERSONAL_ACCESS_TOKEN);
+getTypes(process.env.FIGMA_FILE_KEY, process.env.FIGMA_PERSONAL_ACCESS_TOKEN).then(r => {
+    console.log("-----------------------")
+    console.log("Done!")
+    console.log("-----------------------")
+});
