@@ -1,46 +1,42 @@
-# Getting Started with Create React App
+# Figma to typescript
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is a simple tool to extract the Typescript types from all components in a file.
 
-## Available Scripts
+## Getting Started
 
-In the project directory, you can run:
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-### `npm start`
+### Prerequisites
+Add the following environment variables to a `.env` file in the root of the project:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```
+FIGMA_FILE_KEY=your_api_key 
+FIGMA_PERSONAL_ACCESS_TOKEN=your_personal_access_token
+```
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Get your `FIGMA_FILE_KEY` from the URL of the file you want to extract the components from. It's the last part of the URL, after the `/file/` part.
+Get your `FIGMA_PERSONAL_ACCESS_TOKEN` in settings > Personal access token.
 
-### `npm test`
+### Installing
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+A step by step series of examples that tell you how to get a development environment running:
 
-### `npm run build`
+$ git clone [repository url]
+$ cd [project directory]
+$ npm install
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Build
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+After installing all the prerequisites and setting up, you can run the following command to build the .ts files:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+$ npm run build
 
-### `npm run eject`
+If everything goes well, you should see a new folder called `types` with all the files with the same name of your components.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Built With
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- [TypeScript](http://www.typescriptlang.org/) - The main programming language
+- [dotenv](https://www.npmjs.com/package/dotenv) - Environment variable manager
+- [axios](https://axios-http.com/) - Promise based HTTP client for the browser and node.js
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
