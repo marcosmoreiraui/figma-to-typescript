@@ -10,7 +10,7 @@ These instructions will get you a copy of the project up and running on your loc
 Add the following environment variables to a `.env` file in the root of the project:
 
 ```
-FIGMA_FILE_KEY=your_api_key 
+FIGMA_FILE_KEY=your_file_key
 FIGMA_PERSONAL_ACCESS_TOKEN=your_personal_access_token
 ```
 
