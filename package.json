@@ -8,5 +8,8 @@
   },
   "scripts": {
     "build": "node figma-to-typescript.js"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.55"
   }
 }

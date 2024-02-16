@@ -11,7 +11,7 @@ const propTypesToTS = {
     'NUMBER': 'number',
     'BOOLEAN': 'boolean',
     // Change this if you are using a different library
-    'INSTANCE_SWAP': 'React.ReactNode',
+    'INSTANCE_SWAP': 'ReactNode',
 };
 
 /**
@@ -74,9 +74,11 @@ const writeFile = async (filePath, data) => {
 
 const getTypes = async (fileKey, accessToken) => {
 
-    if (!fs.existsSync('types')) {
-        fs.mkdirSync('types');
+    if (fs.existsSync('types')) {
+        fs.rmdirSync('types', {recursive: true});
     }
+
+    fs.mkdirSync('types');
 
 
     const components = await axios.request({
@@ -88,9 +90,14 @@ const getTypes = async (fileKey, accessToken) => {
         }
     });
 
-    console.log("-----------------------")
-    console.log("Writing files...")
-    console.log("-----------------------")
+    if (components.data.meta.component_sets.length === 0) {
+        console.log("No components found in this file")
+        return;
+    } else {
+        console.log("-----------------------")
+        console.log("Writing files...")
+        console.log("-----------------------")
+    }
 
     for (const file of components.data.meta.component_sets) {
         const NODE_ID = file.node_id;
@@ -114,15 +121,15 @@ const getTypes = async (fileKey, accessToken) => {
             console.log(`Writing ${name}.ts...`)
 
             const types = convertToType(component.document.componentPropertyDefinitions);
-            await writeFile(`types/${name}.ts`, `export type ${name}Props = {${types}}`);
+            await writeFile(`types/${name}.ts`, `${types.includes('ReactNode') ? 'import {ReactNode} from "react";\n\n' : ''}export type ${name}Props = {${types}}`);
         }
     }
 
     return components.data;
 }
 
-getTypes(process.env.FIGMA_FILE_KEY, process.env.FIGMA_PERSONAL_ACCESS_TOKEN).then(r => {
+getTypes(process.env.FIGMA_FILE_KEY, process.env.FIGMA_PERSONAL_ACCESS_TOKEN).then(() => {
     console.log("-----------------------")
-    console.log("Done!")
+    console.log("Done")
     console.log("-----------------------")
 });

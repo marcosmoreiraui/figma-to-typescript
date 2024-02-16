@@ -1,6 +1,6 @@
 # Figma to typescript
 
-This project is a simple tool to extract the Typescript types from all components in a file.
+This project is a simple tool to extract the Typescript types from all the published components in a file.
 
 ## Getting Started
 
